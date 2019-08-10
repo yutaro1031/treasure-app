@@ -55,5 +55,5 @@ func (ac *ArticleComment) Create(w http.ResponseWriter, r *http.Request) (int, i
 	}
 
 	articleComment.ID = createdID
-	return articleComment, http.StatusCreated, nil
+	return http.StatusCreated, articleComment, nil
 }
