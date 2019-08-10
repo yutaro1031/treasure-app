@@ -17,10 +17,10 @@ func NewArticleCommentService(db *sqlx.DB) *ArticleComment {
 }
 
 func (ac *ArticleComment) Create(newArticleComment *model.ArticleComment) (int64, error) {
-	//_, err := repository.FindArticle(ac.db, newArticleComment.ArticleID)
-	//if err != nil {
-	//	return 0, err
-	//}
+	_, err := repository.FindArticle(ac.db, newArticleComment.ArticleID)
+	if err != nil {
+		return 0, err
+	}
 	var createdId int64
 	if err := dbutil.TXHandler(ac.db, func(tx *sqlx.Tx) error {
 		result, err := repository.CreateArticleComment(tx, newArticleComment)

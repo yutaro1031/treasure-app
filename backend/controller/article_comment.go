@@ -1,14 +1,17 @@
 package controller
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 	"github.com/voyagegroup/treasure-app/httputil"
 	"github.com/voyagegroup/treasure-app/model"
+	"github.com/voyagegroup/treasure-app/repository"
 	"github.com/voyagegroup/treasure-app/service"
 )
 
@@ -37,7 +40,12 @@ func (ac *ArticleComment) Create(w http.ResponseWriter, r *http.Request) (int, i
 		return http.StatusBadRequest, nil, err
 	}
 
-	user, err := httputil.GetUserFromContext(r.Context())
+	firebaseUser, err := httputil.GetUserFromContext(r.Context())
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+
+	user, err := repository.GetUser(ac.dbx, firebaseUser.FirebaseUID)
 	if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
@@ -47,11 +55,12 @@ func (ac *ArticleComment) Create(w http.ResponseWriter, r *http.Request) (int, i
 		UserID:    user.ID,
 		Body:      createArticleComment.Body,
 	}
-
 	articleCommentService := service.NewArticleCommentService(ac.dbx)
 	createdID, err := articleCommentService.Create(articleComment)
-	if err != nil {
-		return http.StatusBadRequest, nil, err
+	if err != nil && errors.Cause(err) == sql.ErrNoRows {
+		return http.StatusNotFound, nil, err
+	} else if err != nil {
+		return http.StatusInternalServerError, nil, err
 	}
 
 	articleComment.ID = createdID

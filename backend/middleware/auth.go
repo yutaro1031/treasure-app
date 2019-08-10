@@ -57,7 +57,14 @@ func (auth *AuthMiddleware) Handler(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx := httputil.SetUserToContext(r.Context(), &u)
+		internalUser, err := repository.GetUser(auth.db, u.FirebaseUID)
+		if err != nil {
+			log.Print(err.Error())
+			http.Error(w, "Failed to get internal user info", http.StatusInternalServerError)
+			return
+		}
+
+		ctx := httputil.SetUserToContext(r.Context(), internalUser)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
