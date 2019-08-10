@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+
 	"github.com/voyagegroup/treasure-app/sample"
 
 	"log"
@@ -17,8 +18,8 @@ import (
 	"github.com/rs/cors"
 	"github.com/voyagegroup/treasure-app/controller"
 	db2 "github.com/voyagegroup/treasure-app/db"
-	"github.com/voyagegroup/treasure-app/middleware"
 	"github.com/voyagegroup/treasure-app/firebase"
+	"github.com/voyagegroup/treasure-app/middleware"
 )
 
 type Server struct {
@@ -84,6 +85,9 @@ func (s *Server) Route() *mux.Router {
 	r.Methods(http.MethodDelete).Path("/articles/{id}").Handler(authChain.Then(AppHandler{articleController.Destroy}))
 	r.Methods(http.MethodGet).Path("/articles").Handler(commonChain.Then(AppHandler{articleController.Index}))
 	r.Methods(http.MethodGet).Path("/articles/{id}").Handler(commonChain.Then(AppHandler{articleController.Show}))
+
+	articleCommentController := controller.NewArticleComment(s.dbx)
+	r.Methods(http.MethodPost).Path("/articles/{article_id}/comments").Handler(authChain.Then(AppHandler{articleCommentController.Create}))
 
 	r.PathPrefix("").Handler(commonChain.Then(http.StripPrefix("/img", http.FileServer(http.Dir("./img")))))
 	return r
