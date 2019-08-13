@@ -44,30 +44,42 @@ func (a *Article) Show(w http.ResponseWriter, r *http.Request) (int, interface{}
 		return http.StatusBadRequest, nil, err
 	}
 
-	article, err := repository.FindArticle(a.db, aid)
+	articleService := service.NewArticle(a.db)
+	articleDetail, err := articleService.FindArticleDetail(aid)
 	if err != nil && err == sql.ErrNoRows {
 		return http.StatusNotFound, nil, err
 	} else if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
 
-	return http.StatusCreated, article, nil
+	return http.StatusCreated, articleDetail, nil
 }
 
 func (a *Article) Create(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	newArticle := &model.Article{}
-	if err := json.NewDecoder(r.Body).Decode(&newArticle); err != nil {
+	reqParam := &model.RequestCreateArticle{}
+	if err := json.NewDecoder(r.Body).Decode(&reqParam); err != nil {
 		return http.StatusBadRequest, nil, err
 	}
 
+	createArticle := &model.Article{
+		Title: reqParam.Title,
+		Body:  reqParam.Body,
+	}
+
 	articleService := service.NewArticle(a.db)
-	id, err := articleService.Create(newArticle)
+	id, err := articleService.Create(createArticle, reqParam.TagIDs)
 	if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
-	newArticle.ID = id
 
-	return http.StatusCreated, newArticle, nil
+	respParam := &model.ResponseCreateArticle{
+		ID:     id,
+		Title:  createArticle.Title,
+		Body:   createArticle.Body,
+		TagIDs: reqParam.TagIDs,
+	}
+
+	return http.StatusCreated, respParam, nil
 }
 
 func (a *Article) Update(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
@@ -82,13 +94,13 @@ func (a *Article) Update(w http.ResponseWriter, r *http.Request) (int, interface
 		return http.StatusBadRequest, nil, err
 	}
 
-	reqArticle := &model.Article{}
-	if err := json.NewDecoder(r.Body).Decode(&reqArticle); err != nil {
+	reqParam := &model.Article{}
+	if err := json.NewDecoder(r.Body).Decode(&reqParam); err != nil {
 		return http.StatusBadRequest, nil, err
 	}
 
 	articleService := service.NewArticle(a.db)
-	err = articleService.Update(aid, reqArticle)
+	err = articleService.Update(aid, reqParam)
 	if err != nil && errors.Cause(err) == sql.ErrNoRows {
 		return http.StatusNotFound, nil, err
 	} else if err != nil {
