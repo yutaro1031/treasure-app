@@ -3,23 +3,21 @@ package server
 import (
 	"fmt"
 
-	"github.com/voyagegroup/treasure-app/sample"
-
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/gorilla/handlers"
-	"github.com/justinas/alice"
-
 	"firebase.google.com/go/auth"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
+	"github.com/justinas/alice"
 	"github.com/rs/cors"
 	"github.com/voyagegroup/treasure-app/controller"
 	db2 "github.com/voyagegroup/treasure-app/db"
 	"github.com/voyagegroup/treasure-app/firebase"
 	"github.com/voyagegroup/treasure-app/middleware"
+	"github.com/voyagegroup/treasure-app/sample"
 )
 
 type Server struct {
