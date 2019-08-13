@@ -40,7 +40,7 @@ req-public:
 	curl -v $(HOST):$(PORT)/public
 
 req-private:
-	curl -v -H "Authorization: Bearer ha" $(HOST):$(PORT)/private
+	curl -v -H "Authorization: Bearer $(shell cat ./$(TOKEN_FILE))" $(HOST):$(PORT)/private
 
 database-init:
 	make -C ../database init
