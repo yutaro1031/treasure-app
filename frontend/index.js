@@ -1,4 +1,4 @@
-import { h, render } from "preact";
-import App from "./src/App";
+import Vue from 'vue';
+import App from './src/App.vue';
 
-render(<App />, document.getElementById("root"));
+new Vue(App).$mount('#root')
