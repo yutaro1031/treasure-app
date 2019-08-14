@@ -61,9 +61,15 @@ func (a *Article) Create(w http.ResponseWriter, r *http.Request) (int, interface
 		return http.StatusBadRequest, nil, err
 	}
 
+	user, err := httputil.GetUserFromContext(r.Context())
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+
 	createArticle := &model.Article{
-		Title: reqParam.Title,
-		Body:  reqParam.Body,
+		Title:  reqParam.Title,
+		Body:   reqParam.Body,
+		UserID: &user.ID,
 	}
 
 	articleService := service.NewArticle(a.db)
@@ -76,6 +82,7 @@ func (a *Article) Create(w http.ResponseWriter, r *http.Request) (int, interface
 		ID:     id,
 		Title:  createArticle.Title,
 		Body:   createArticle.Body,
+		UserID: createArticle.UserID,
 		TagIDs: reqParam.TagIDs,
 	}
 
