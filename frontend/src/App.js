@@ -2,6 +2,8 @@ import { h, Component } from "preact";
 import firebase from "./firebase";
 import { getPrivateMessage, getPublicMessage } from "./api";
 
+import ArticleClient from "./articles/client";
+
 class App extends Component {
   constructor() {
     super();
@@ -10,11 +12,17 @@ class App extends Component {
     this.state.errorMessage = "";
   }
 
+  initializeClients(user) {
+    [ArticleClient].map(v => v.setUser(user));
+  }
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user });
+        this.initializeClients(user);
       } else {
+        this.initializeClients(null);
         this.setState({
           user: null
         });
