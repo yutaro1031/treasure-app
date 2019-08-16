@@ -6,6 +6,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
+	"github.com/voyagegroup/treasure-app/httputil"
 	"github.com/voyagegroup/treasure-app/model"
 	"github.com/voyagegroup/treasure-app/repository"
 	"github.com/voyagegroup/treasure-app/service"
@@ -63,6 +64,21 @@ func (a *Book) Create(w http.ResponseWriter, r *http.Request) (int, interface{},
 	newBook.ID = id
 
 	return http.StatusCreated, newBook, nil
+}
+
+func (a *Book) Search(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+	param := r.URL.Query()
+	keyword, ok := param["keyword"]
+	if !ok {
+		return http.StatusBadRequest, nil, &httputil.HTTPError{Message: "invalid path parameter"}
+	}
+
+	searchedBooks, err := httputil.Search(keyword[0])
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+
+	return http.StatusCreated, searchedBooks, nil
 }
 
 // func (a *Book) Update(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
