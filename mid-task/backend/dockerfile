@@ -1,0 +1,15 @@
+FROM golang:1.12.6
+
+RUN go get golang.org/x/net/html
+RUN go get github.com/gorilla/mux
+RUN go get github.com/justinas/alice
+RUN go get github.com/gorilla/handlers
+RUN go get github.com/jmoiron/sqlx
+RUN go get github.com/go-sql-driver/mysql
+RUN go get github.com/rs/cors
+RUN go get github.com/pkg/errors
+RUN go get github.com/oxequa/realize
+RUN go get github.com/joho/godotenv
+
+WORKDIR /go/src/github.com/yutaro1031/mid-task
+ADD . /go/src/github.com/yutaro1031/mid-task

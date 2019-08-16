@@ -1,26 +1,26 @@
 version: '3'
 
 services:
-  # back:
-  #   build: backend/.
-  #   tty: true
-  #   stdin_open: true
-  #   environment:
-  #     DB_HOST: db
-  #   volumes:
-  #     - ./backend:/go/app
-  #   ports:
-  #     - 5000:5000
-  #   command: realize start
+  back:
+    build: backend/.
+    tty: true
+    stdin_open: true
+    environment:
+      DB_HOST: db
+    volumes:
+      - ./backend:/go/src/github.com/yutaro1031/mid-task
+    ports:
+      - 5000:5000
+#    command: realize start
 
-  # front:
-  #   build: frontend/.
-  #   tty: true
-  #   ports:
-  #     - 5550:8080
-  #   volumes:
-  #     - ./frontend/app:/app
-  #   stdin_open: true
+  front:
+    build: frontend/.
+    tty: true
+    ports:
+      - 5550:8080
+    volumes:
+      - ./frontend/app:/app
+    stdin_open: true
 
   db:
     build: db/.
