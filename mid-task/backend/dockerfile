@@ -1,8 +1,10 @@
 FROM golang:1.12.6
 
 RUN go get golang.org/x/net/html
+RUN go get github.com/joho/godotenv
+RUN go get github.com/oxequa/realize
 
-WORKDIR /go/src/mid-task
-ADD . /go/src/mid-task
+WORKDIR /go/app
+ADD . /go/app
 
 EXPOSE 5000

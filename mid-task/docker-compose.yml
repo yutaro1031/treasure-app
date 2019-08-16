@@ -8,10 +8,10 @@ services:
     environment:
       DB_HOST: db
     volumes:
-      - ./backend:/go/src/mid-task
+      - ./backend:/go/app
     ports:
       - 5000:5000
-    command: go run main.go
+    command: realize start
 
   front:
     build: frontend/.
