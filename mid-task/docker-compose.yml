@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  back:
+    build: backend/.
+    tty: true
+    stdin_open: true
+    environment:
+      DB_HOST: db
+    volumes:
+      - ./backend:/go/src/mid-task
+    ports:
+      - 5000:5000
+
+  front:
+    build: frontend/.
+    tty: true
+    ports:
+      - 5550:8080
+    volumes:
+      - ./frontend/app:/app
+    stdin_open: true
+
+  db:
+    build: db/.
+    container_name: mysql_voyage_mid
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: 'Asia/Tokyo'
+    command: mysqld
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/sqls:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql_voyage_mid
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - 8080:80

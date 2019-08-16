@@ -1,0 +1,10 @@
+FROM golang:1.12.6
+
+RUN go get golang.org/x/net/html
+
+WORKDIR /go/src/mid-task
+ADD . /go/src/mid-task
+
+EXPOSE 5000
+
+CMD go run main.go
