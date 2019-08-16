@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `registered_book`;
+DROP TABLE IF EXISTS `book`;
 
-CREATE TABLE IF NOT EXISTS `registered_book`
+CREATE TABLE IF NOT EXISTS `book`
 (
   `id`               INT unsigned    NOT NULL  AUTO_INCREMENT,
   `name`             VARCHAR(255)    NOT NULL,
@@ -35,5 +35,5 @@ CREATE TABLE IF NOT EXISTS `tag_book`
   `updated_at`       TIMESTAMP                 DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (tag_id) REFERENCES tag (id),
-  FOREIGN KEY (book_id) REFERENCES registered_book (id)
+  FOREIGN KEY (book_id) REFERENCES book (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
