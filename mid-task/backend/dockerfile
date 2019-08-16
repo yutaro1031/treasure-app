@@ -6,5 +6,3 @@ WORKDIR /go/src/mid-task
 ADD . /go/src/mid-task
 
 EXPOSE 5000
-
-CMD go run main.go

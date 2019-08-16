@@ -7,6 +7,7 @@ import (
 )
 
 func sayhelloName(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("ho")
 	fmt.Fprintf(w, "Hello astaxie!")
 }
 

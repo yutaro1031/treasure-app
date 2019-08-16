@@ -11,6 +11,7 @@ services:
       - ./backend:/go/src/mid-task
     ports:
       - 5000:5000
+    command: go run main.go
 
   front:
     build: frontend/.
