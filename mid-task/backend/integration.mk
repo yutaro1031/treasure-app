@@ -14,6 +14,8 @@ TAG_ID:=1
 TAG_NAME:=hoge
 TAG_UPDATE_NAME:=fuga
 
+TAG_BOOK_ID:=1
+
 req-books-index:
 	curl -v -XGET $(HOST):$(PORT)/books
 
@@ -34,6 +36,12 @@ req-tags-put:
 
 req-tags-delete:
 	curl -v -XDELETE $(HOST):$(PORT)/tags/$(TAG_ID)
+
+req-add-tag-post:
+	curl -v -XPOST $(HOST):$(PORT)/tag_books -d '{"tag_id": $(TAG_ID), "book_id": $(BOOK_ID)}'
+
+req-remove-tag-delete:
+	curl -v -XDELETE $(HOST):$(PORT)/tag_books/$(TAG_BOOK_ID)
 
 req-public:
 	curl -v $(HOST):$(PORT)/public

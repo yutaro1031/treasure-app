@@ -83,6 +83,10 @@ func (s *Server) Route() *mux.Router {
 	r.Methods(http.MethodPut).Path("/tags/{id}").Handler(commonChain.Then(AppHandler{tagController.Update}))
 	r.Methods(http.MethodDelete).Path("/tags/{id}").Handler(commonChain.Then(AppHandler{tagController.Destroy}))
 
+	tagBookController := controller.NewTagBook(s.db)
+	r.Methods(http.MethodPost).Path("/tag_books").Handler(commonChain.Then(AppHandler{tagBookController.Create}))
+	r.Methods(http.MethodDelete).Path("/tag_books/{id}").Handler(commonChain.Then(AppHandler{tagBookController.Destroy}))
+
 	r.PathPrefix("").Handler(commonChain.Then(http.StripPrefix("/img", http.FileServer(http.Dir("./img")))))
 	return r
 }
