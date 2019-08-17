@@ -8,24 +8,24 @@ import (
 )
 
 func AllBook(db *sqlx.DB) ([]model.Book, error) {
-	a := make([]model.Book, 0)
-	if err := db.Select(&a, `SELECT id, name, isbn, image_url, item_url FROM book`); err != nil {
+	b := make([]model.Book, 0)
+	if err := db.Select(&b, `SELECT id, name, isbn, image_url, item_url FROM book`); err != nil {
 		return nil, err
 	}
-	return a, nil
+	return b, nil
 }
 
 func FindBook(db *sqlx.DB, id int64) (*model.Book, error) {
-	a := model.Book{}
-	if err := db.Get(&a, `
+	b := model.Book{}
+	if err := db.Get(&b, `
 SELECT id, name, isbn, image_url, item_url FROM book WHERE id = ?
 `, id); err != nil {
 		return nil, err
 	}
-	return &a, nil
+	return &b, nil
 }
 
-func CreateBook(db *sqlx.Tx, a *model.Book) (sql.Result, error) {
+func CreateBook(db *sqlx.Tx, b *model.Book) (sql.Result, error) {
 	stmt, err := db.Prepare(`
 INSERT INTO book (name, isbn, image_url, item_url) VALUES (?, ?, ?, ?)
 `)
@@ -33,7 +33,7 @@ INSERT INTO book (name, isbn, image_url, item_url) VALUES (?, ?, ?, ?)
 		return nil, err
 	}
 	defer stmt.Close()
-	return stmt.Exec(a.Name, a.ISBN, a.ImageURL, a.ItemURL)
+	return stmt.Exec(b.Name, b.ISBN, b.ImageURL, b.ItemURL)
 }
 
 func DestroyBook(db *sqlx.Tx, id int64) (sql.Result, error) {

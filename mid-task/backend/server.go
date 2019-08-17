@@ -77,6 +77,12 @@ func (s *Server) Route() *mux.Router {
 	r.Methods(http.MethodDelete).Path("/books/{id}").Handler(commonChain.Then(AppHandler{bookController.Destroy}))
 	r.Methods(http.MethodGet).Path("/search").Handler(commonChain.Then(AppHandler{bookController.Search}))
 
+	tagController := controller.NewTag(s.db)
+	r.Methods(http.MethodGet).Path("/tags").Handler(commonChain.Then(AppHandler{tagController.Index}))
+	r.Methods(http.MethodPost).Path("/tags").Handler(commonChain.Then(AppHandler{tagController.Create}))
+	r.Methods(http.MethodPut).Path("/tags/{id}").Handler(commonChain.Then(AppHandler{tagController.Update}))
+	r.Methods(http.MethodDelete).Path("/tags/{id}").Handler(commonChain.Then(AppHandler{tagController.Destroy}))
+
 	r.PathPrefix("").Handler(commonChain.Then(http.StripPrefix("/img", http.FileServer(http.Dir("./img")))))
 	return r
 }

@@ -17,27 +17,6 @@ func NewBook(db *sqlx.DB) *Book {
 	return &Book{db}
 }
 
-// func (a *Book) Update(id int64, newBook *model.Book) error {
-// 	_, err := repository.FindBook(a.db, id)
-// 	if err != nil {
-// 		return errors.Wrap(err, "failed find book")
-// 	}
-
-// 	if err := dbutil.TXHandler(a.db, func(tx *sqlx.Tx) error {
-// 		_, err := repository.UpdateBook(tx, id, newBook)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		if err := tx.Commit(); err != nil {
-// 			return err
-// 		}
-// 		return err
-// 	}); err != nil {
-// 		return errors.Wrap(err, "failed book update transaction")
-// 	}
-// 	return nil
-// }
-
 func (a *Book) Destroy(id int64) error {
 	_, err := repository.FindBook(a.db, id)
 	if err != nil {
