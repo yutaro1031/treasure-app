@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 
-	"github.com/voyagegroup/treasure-app/sample"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/sample"
 
 	"log"
 	"net/http"
@@ -15,9 +15,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/cors"
-	"github.com/voyagegroup/treasure-app/controller"
-	db2 "github.com/voyagegroup/treasure-app/db"
-	"github.com/voyagegroup/treasure-app/middleware"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/controller"
+	db2 "github.com/yutaro1031/treasure-app/mid-task/backend/db"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/middleware"
 )
 
 type Server struct {

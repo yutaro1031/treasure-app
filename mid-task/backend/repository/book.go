@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/voyagegroup/treasure-app/model"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
 )
 
 func AllBook(db *sqlx.DB) ([]model.Book, error) {

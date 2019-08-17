@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/yutaro1031/mid-task/model"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
 )
 
 func Search(keyword string) (interface{}, error) {

@@ -6,10 +6,10 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/voyagegroup/treasure-app/httputil"
-	"github.com/voyagegroup/treasure-app/model"
-	"github.com/voyagegroup/treasure-app/repository"
-	"github.com/voyagegroup/treasure-app/service"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/httputil"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/repository"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/service"
 )
 
 type Book struct {

@@ -3,10 +3,10 @@ package service
 import (
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
-	"github.com/voyagegroup/treasure-app/dbutil"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/dbutil"
 
-	"github.com/voyagegroup/treasure-app/model"
-	"github.com/voyagegroup/treasure-app/repository"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
+	"github.com/yutaro1031/treasure-app/mid-task/backend/repository"
 )
 
 type Book struct {
