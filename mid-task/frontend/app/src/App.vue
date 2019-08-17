@@ -2,11 +2,11 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>実験しようぜ</span>
+        <span>俺の書籍管理</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
-        <span class="mr-2">Latest Release</span>
+      <v-btn flat @click="$router.push({ path: 'search' })" target="_blank">
+        <span class="mr-2">俺の書籍を増やす</span>
       </v-btn>
     </v-toolbar>
 
@@ -20,14 +20,8 @@
 var store = {
   debug: true,
   state: {
-    evaluationData: [],
-    selectedBookInfo: {},
-    bookIds: [],
-    searchWord: '',
-    selectedSimilarWords: [],
-    noun: [],
-    adjective: []
+    evaluationData: []
   }
-}
-export default store
+};
+export default store;
 </script>

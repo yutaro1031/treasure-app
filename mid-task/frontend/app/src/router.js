@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Tables from './views/Tables.vue';
+import Books from './views/Books.vue';
 
 Vue.use(Router);
 
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'tables',
-      component: Tables
-    },
+      name: 'books',
+      component: Books
+    }
   ]
 });
