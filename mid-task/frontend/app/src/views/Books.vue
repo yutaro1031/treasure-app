@@ -27,8 +27,8 @@ export default {
     };
   },
   created() {
-    const url = process.env.VUE_APP_API_URL;
-    fetch(url + '/books')
+    const url = process.env.VUE_APP_API_URL + '/books';
+    fetch(url)
       .then(response => response.json())
       .then(json => {
         console.log(json);

@@ -18,6 +18,7 @@ func Search(keyword string) (interface{}, error) {
 
 	values := url.Values{}
 	values.Add("applicationId", rakutenAPIKey)
+	values.Add("title", keyword)
 
 	resp, _ := http.Get(rakutenURL + "?" + values.Encode())
 	defer resp.Body.Close()
