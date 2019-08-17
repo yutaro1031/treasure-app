@@ -38,26 +38,26 @@ func NewBook(db *sqlx.DB) *Book {
 // 	return nil
 // }
 
-// func (a *Book) Destroy(id int64) error {
-// 	_, err := repository.FindBook(a.db, id)
-// 	if err != nil {
-// 		return errors.Wrap(err, "failed find book")
-// 	}
+func (a *Book) Destroy(id int64) error {
+	_, err := repository.FindBook(a.db, id)
+	if err != nil {
+		return errors.Wrap(err, "failed find book")
+	}
 
-// 	if err := dbutil.TXHandler(a.db, func(tx *sqlx.Tx) error {
-// 		_, err := repository.DestroyBook(tx, id)
-// 		if err != nil {
-// 			return err
-// 		}
-// 		if err := tx.Commit(); err != nil {
-// 			return err
-// 		}
-// 		return err
-// 	}); err != nil {
-// 		return errors.Wrap(err, "failed book delete transaction")
-// 	}
-// 	return nil
-// }
+	if err := dbutil.TXHandler(a.db, func(tx *sqlx.Tx) error {
+		_, err := repository.DestroyBook(tx, id)
+		if err != nil {
+			return err
+		}
+		if err := tx.Commit(); err != nil {
+			return err
+		}
+		return err
+	}); err != nil {
+		return errors.Wrap(err, "failed book delete transaction")
+	}
+	return nil
+}
 
 func (a *Book) Create(newBook *model.Book) (int64, error) {
 	var createdId int64

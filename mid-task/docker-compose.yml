@@ -16,11 +16,11 @@ services:
   front:
     build: frontend/.
     tty: true
+    stdin_open: true
     ports:
       - 5550:8080
     volumes:
       - ./frontend/app:/app
-    stdin_open: true
 
   db:
     build: db/.
