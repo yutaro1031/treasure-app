@@ -22,13 +22,13 @@ func (a *Book) AllBookWithTags() ([]model.BookWithTags, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "failed get books")
 	}
-	tags, err := repository.AllTagBook(a.db)
+	tags_for_index, err := repository.AllTagBook(a.db)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed get book_tags")
 	}
 
 	for index, book := range books {
-		for _, tag := range tags {
+		for _, tag := range tags_for_index {
 			if book.ID == tag.BookID {
 				books[index].Tags = append(books[index].Tags, model.Tag{tag.ID, tag.Name})
 			}
