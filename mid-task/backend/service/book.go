@@ -17,6 +17,27 @@ func NewBook(db *sqlx.DB) *Book {
 	return &Book{db}
 }
 
+func (a *Book) AllBookWithTags() ([]model.BookWithTags, error) {
+	books, err := repository.AllBook(a.db)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed get books")
+	}
+	tags, err := repository.AllTagBook(a.db)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed get book_tags")
+	}
+
+	for index, book := range books {
+		for _, tag := range tags {
+			if book.ID == tag.BookID {
+				books[index].Tags = append(books[index].Tags, model.Tag{tag.ID, tag.Name})
+			}
+		}
+	}
+
+	return books, nil
+}
+
 func (a *Book) Destroy(id int64) error {
 	_, err := repository.FindBook(a.db, id)
 	if err != nil {

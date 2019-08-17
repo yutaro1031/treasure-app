@@ -7,8 +7,8 @@ import (
 	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
 )
 
-func AllBook(db *sqlx.DB) ([]model.Book, error) {
-	b := make([]model.Book, 0)
+func AllBook(db *sqlx.DB) ([]model.BookWithTags, error) {
+	b := make([]model.BookWithTags, 0)
 	if err := db.Select(&b, `SELECT id, name, isbn, image_url, item_url FROM book`); err != nil {
 		return nil, err
 	}

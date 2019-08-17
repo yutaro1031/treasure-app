@@ -12,7 +12,6 @@ import (
 
 	"github.com/yutaro1031/treasure-app/mid-task/backend/httputil"
 	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
-	"github.com/yutaro1031/treasure-app/mid-task/backend/repository"
 	"github.com/yutaro1031/treasure-app/mid-task/backend/service"
 )
 
@@ -25,7 +24,8 @@ func NewBook(db *sqlx.DB) *Book {
 }
 
 func (a *Book) Index(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	books, err := repository.AllBook(a.db)
+	bookService := service.NewBook(a.db)
+	books, err := bookService.AllBookWithTags()
 	if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
