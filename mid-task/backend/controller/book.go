@@ -32,28 +32,6 @@ func (a *Book) Index(w http.ResponseWriter, r *http.Request) (int, interface{}, 
 	return http.StatusOK, books, nil
 }
 
-// func (a *Book) Show(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-// 	vars := mux.Vars(r)
-// 	id, ok := vars["id"]
-// 	if !ok {
-// 		return http.StatusBadRequest, nil, &httputil.HTTPError{Message: "invalid path parameter"}
-// 	}
-
-// 	aid, err := strconv.ParseInt(id, 10, 64)
-// 	if err != nil {
-// 		return http.StatusBadRequest, nil, err
-// 	}
-
-// 	book, err := repository.FindBook(a.db, aid)
-// 	if err != nil && err == sql.ErrNoRows {
-// 		return http.StatusNotFound, nil, err
-// 	} else if err != nil {
-// 		return http.StatusInternalServerError, nil, err
-// 	}
-
-// 	return http.StatusCreated, book, nil
-// }
-
 func (a *Book) Create(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	newBook := &model.Book{}
 	if err := json.NewDecoder(r.Body).Decode(&newBook); err != nil {
