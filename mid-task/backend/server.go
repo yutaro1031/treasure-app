@@ -75,7 +75,6 @@ func (s *Server) Route() *mux.Router {
 	r.Methods(http.MethodGet).Path("/books").Handler(commonChain.Then(AppHandler{bookController.Index}))
 	r.Methods(http.MethodPost).Path("/books").Handler(commonChain.Then(AppHandler{bookController.Create}))
 	r.Methods(http.MethodGet).Path("/search").Handler(commonChain.Then(AppHandler{bookController.Search}))
-	// r.Methods(http.MethodGet).Path("/books/{id}").Handler(commonChain.Then(AppHandler{bookController.Show}))
 
 	r.PathPrefix("").Handler(commonChain.Then(http.StripPrefix("/img", http.FileServer(http.Dir("./img")))))
 	return r
