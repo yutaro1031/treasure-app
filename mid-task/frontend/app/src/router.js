@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Books from './views/Books.vue';
 import Search from './views/Search.vue';
+import Tags from './views/Tags.vue';
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: Tags
     }
   ]
 });

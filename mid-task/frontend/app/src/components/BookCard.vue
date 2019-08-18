@@ -4,7 +4,7 @@
 
     <v-card-text>
       <h3 class="card-text">{{ book_info['name'] }}</h3>
-      <div class="hoge" v-for="(tag_info, index) in tagDatas" :key="index">
+      <div v-for="(tag_info, index) in tagDatas" :key="index">
         <Tag :tag_info="tag_info" @deleteTag="deleteTag(index)" />
       </div>
       <v-select :items="tags" item-value="id" item-text="name" label="タグを追加" @change="addTag"></v-select>
