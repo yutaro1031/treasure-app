@@ -4,9 +4,9 @@
 
     <v-card-text>
       <h3 class="card-text">{{ book_info['name'] }}</h3>
-      <div v-for="(tag_info, index) in tagDatas" :key="index">
+      <span v-for="(tag_info, index) in tagDatas" :key="index">
         <Tag :tag_info="tag_info" @deleteTag="deleteTag(index)" />
-      </div>
+      </span>
       <v-select :items="tags" item-value="id" item-text="name" label="タグを追加" @change="addTag"></v-select>
     </v-card-text>
 
@@ -32,7 +32,7 @@ export default {
   props: ['book_info', 'tags'],
   data() {
     return {
-      tagDatas: this.$props.book_info.tags
+      tagDatas: this.$props.book_info.tags == null ? [] : this.$props.book_info.tags
     };
   },
   methods: {
