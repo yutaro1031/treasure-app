@@ -8,7 +8,7 @@
     <v-spacer></v-spacer>
     <v-layout row wrap>
       <v-flex xs3 v-for="(book_info, index) in books" :key="index">
-        <BookCard :book_info="book_info" @deleteBook="deleteBook(index)" />
+        <BookCard :book_info="book_info" :tags="tags" @deleteBook="deleteBook(index)" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -23,21 +23,23 @@ export default {
   },
   data() {
     return {
-      books: []
+      books: [],
+      tags: []
     };
   },
   created() {
-    const url = process.env.VUE_APP_API_URL + '/books';
-    fetch(url)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        this.$data.books = json;
-      });
+    const url = process.env.VUE_APP_API_URL;
+    this.requestJson(url + '/tags').then(json => (this.$data.tags = json));
+    this.requestJson(url + '/books').then(json => (this.$data.books = json));
   },
   methods: {
     deleteBook(index) {
       this.$data.books.splice(index, 1);
+    },
+    requestJson(url) {
+      return fetch(url)
+        .then(response => response.json())
+        .catch(err => console.error(err));
     }
   }
 };
