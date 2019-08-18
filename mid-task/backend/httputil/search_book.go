@@ -12,13 +12,14 @@ import (
 	"github.com/yutaro1031/treasure-app/mid-task/backend/model"
 )
 
-func Search(keyword string) (interface{}, error) {
+func Search(keyword, page string) (interface{}, error) {
 	rakutenAPIKey := os.Getenv("RAKUTEN_API_KEY")
 	rakutenURL := os.Getenv("RAKUTEN_URL")
 
 	values := url.Values{}
 	values.Add("applicationId", rakutenAPIKey)
 	values.Add("title", keyword)
+	values.Add("page", page)
 
 	resp, _ := http.Get(rakutenURL + "?" + values.Encode())
 	defer resp.Body.Close()

@@ -17,6 +17,9 @@
         <SearchedBookCard :book_info="book_info.Item" />
       </v-flex>
     </v-layout>
+    <div class="text-xs-center">
+      <v-btn round color="primary" dark @click="moreLoad">もっと見る</v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -31,20 +34,35 @@ export default {
   data() {
     return {
       books: [],
-      inputedText: ''
+      inputedText: '',
+      pager: 1,
+      searchedText: ''
     };
   },
   methods: {
     searchBooks() {
       const url = process.env.VUE_APP_API_URL + '/search';
       const keyword = this.$data.inputedText;
-      console.log(keyword);
+      this.$data.pager = 1;
 
-      fetch(url + '?keyword=' + keyword)
+      this.requestJson(url, keyword, 1).then(json => {
+        this.$data.books = json.Items;
+        this.$data.searchedText = keyword;
+      });
+    },
+    moreLoad() {
+      const url = process.env.VUE_APP_API_URL + '/search';
+      this.requestJson(url, this.$data.searchedText, this.$data.pager).then(json => {
+        this.$data.books = this.$data.books.concat(json.Items);
+      });
+    },
+    requestJson(url, keyword, pager) {
+      return fetch(url + '?keyword=' + keyword + '&page=' + pager)
         .then(response => response.json())
         .then(json => {
-          console.log(json.Items);
-          this.$data.books = json.Items;
+          console.log(json);
+          this.$data.pager += 1;
+          return json;
         });
     }
   }

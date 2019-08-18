@@ -54,8 +54,12 @@ func (a *Book) Search(w http.ResponseWriter, r *http.Request) (int, interface{},
 	if !ok {
 		return http.StatusBadRequest, nil, &httputil.HTTPError{Message: "invalid path parameter"}
 	}
+	page, ok := param["page"]
+	if !ok {
+		return http.StatusBadRequest, nil, &httputil.HTTPError{Message: "invalid path parameter"}
+	}
 
-	searchedBooks, err := httputil.Search(keyword[0])
+	searchedBooks, err := httputil.Search(keyword[0], page[0])
 	if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
