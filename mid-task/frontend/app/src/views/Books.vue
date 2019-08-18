@@ -8,7 +8,7 @@
     <v-spacer></v-spacer>
     <v-layout row wrap>
       <v-flex xs3 v-for="(book_info, index) in books" :key="index">
-        <BookCard :book_info="book_info" @delete="deleteBook(index)" />
+        <BookCard :book_info="book_info" @deleteBook="deleteBook(index)" />
       </v-flex>
     </v-layout>
   </v-container>

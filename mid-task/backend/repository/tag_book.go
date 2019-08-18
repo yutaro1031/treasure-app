@@ -10,7 +10,7 @@ import (
 func AllTagBook(db *sqlx.DB) ([]model.TagBookForIndex, error) {
 	b := make([]model.TagBookForIndex, 0)
 	if err := db.Select(&b, `
-SELECT tag.id AS 'id', tag.name AS 'name', book.id AS 'book_id'
+SELECT tag_book.id AS 'id', tag.name AS 'name', book.id AS 'book_id'
 FROM tag_book INNER JOIN tag ON tag_book.tag_id = tag.id
 INNER JOIN book ON tag_book.book_id = book.id
 `); err != nil {
