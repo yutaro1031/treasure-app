@@ -2,7 +2,7 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>俺の書籍管理</span>
+        <span><a id="top" href="/">俺の書籍管理</a></span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn flat @click="$router.push({ path: 'search' })" target="_blank">
@@ -25,3 +25,10 @@ var store = {
 };
 export default store;
 </script>
+
+<style>
+#top {
+  text-decoration: none;
+  color: black;
+}
+</style>

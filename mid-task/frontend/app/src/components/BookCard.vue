@@ -7,8 +7,12 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn class="mx-auto" color="info" v-bind:href="book_info.item_url" target="_blank">
-        楽天市場で詳細をみる
+      <v-btn class="ml-2" color="info" v-bind:href="book_info.item_url" target="_blank">
+        詳細をみる
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn flat icon color="red" @click="deleteBook">
+        <v-icon>fas fa-trash-alt</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -17,9 +21,13 @@
 <script>
 export default {
   props: ['book_info'],
-  data() {},
-  created() {},
-  methods: {}
+  methods: {
+    deleteBook() {
+      const url = process.env.VUE_APP_API_URL;
+      const id = this.$props.book_info.id;
+      fetch(url + '/books/' + id, { method: 'DELETE' }).then(this.$emit('delete'));
+    }
+  }
 };
 </script>
 
